@@ -31,12 +31,15 @@ jobs:
       # sudo apt-get install -y google-chrome-stable - we download the google-chrome-stable package
 
      - name: Install dependencies
+       working-directory: ./"2-Selenium IDE"
        run: dotnet restore
 
      - name: Build
+       working-directory: ./"2-Selenium IDE"
        run: dotnet build --no-restore
 
      - name: Run tests
+       working-directory: ./"2-Selenium IDE"
        env:
         CHROMEWEBDRIVER: /urs/bin/google-chrome
        run: dotnet test --verbosity normal
