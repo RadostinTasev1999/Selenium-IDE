@@ -1,0 +1,44 @@
+name: Selenium IDE CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+     - name: Checkout Repository
+       uses: actions/checkout@v6
+
+     - name: Set up .NET Core
+       uses: actions/setup-dotnet@v5
+       with:
+          dotnet-version: '8.0.x'
+       
+     - name: Install Chrome
+       run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
+      # apt-get update - downloads an updated list of avaialbe packages and their versions. It ensures that the most recent version available is installed.
+      # sudo apt-get install -y google-chrome-stable - we download the google-chrome-stable package
+
+     - name: Install dependencies
+       run: dotnet restore
+
+     - name: Build
+       run: dotnet build --no-restore
+
+     - name: Run tests
+       env:
+        CHROMEWEBDRIVER: /urs/bin/google-chrome
+       run: dotnet test --verbosity normal
+
+
