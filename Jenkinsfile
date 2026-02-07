@@ -33,14 +33,14 @@ Steps:
         stage('Build solution') {
             steps {
                 // Build the project using the solution file
-                bat 'dotnet build SeleniumIde.sln'
+                bat 'dotnet build --no-restore'
             }
         }
 
         stage('Run tests') {
             steps {
                 // Run tests using the solution file
-                bat 'dotnet test SeleniumIde.sln -- no-build --verbosity normal'
+                bat 'dotnet test --no-build --verbosity normal'
             }    
         }
         
